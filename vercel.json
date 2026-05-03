@@ -15,15 +15,20 @@
 
   "routes": [
     {
-      "src": "^/api/(.*)",
-      "dest": "backend/server.js"
+      "src": "/api/(.*)",
+      "dest": "backend/server.js",
+      "check": true
     },
     {
-      "handle": "filesystem"
-    },
+      "src": "/(.*)",
+      "dest": "frontend/$1",
+      "check": true
+    }
+  ],
+  "rewrites": [
     {
-      "src": "^/(.*)",
-      "dest": "/frontend/index.html"
+      "source": "/(.*)",
+      "destination": "/frontend/index.html"
     }
   ]
 }

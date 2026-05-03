@@ -21,12 +21,13 @@ export default function AddApplianceModal({ isOpen, onClose, onAdd }) {
   const [name, setName] = useState('');
   const [selectedType, setSelectedType] = useState(TYPES[0]);
   const [room, setRoom] = useState(ROOMS[0]);
+  const [sector, setSector] = useState('Sector Alpha');
   const [power, setPower] = useState(TYPES[0].power);
   const [added, setAdded] = useState(false);
 
   const reset = () => {
     setName(''); setSelectedType(TYPES[0]);
-    setRoom(ROOMS[0]); setPower(TYPES[0].power); setAdded(false);
+    setRoom(ROOMS[0]); setSector('Sector Alpha'); setPower(TYPES[0].power); setAdded(false);
   };
 
   const handleTypeSelect = (type) => { setSelectedType(type); setPower(type.power); };
@@ -35,7 +36,7 @@ export default function AddApplianceModal({ isOpen, onClose, onAdd }) {
     if (!name.trim()) return;
     setAdded(true);
     setTimeout(() => {
-      onAdd({ name, type: selectedType.key, room, basePower: power, isOn: true });
+      onAdd({ name, type: selectedType.key, room, sector, basePower: power, isOn: true });
       onClose();
       reset();
     }, 1200);
@@ -172,6 +173,25 @@ export default function AddApplianceModal({ isOpen, onClose, onAdd }) {
                     background: 'rgba(255,255,255,0.03)',
                     borderColor: name ? `${selectedType.color}40` : 'rgba(255,255,255,0.08)',
                     boxShadow: name ? `0 4px 20px ${selectedType.color}10` : 'none',
+                  }}
+                />
+              </div>
+
+              {/* Strategic Sector */}
+              <div className="mb-6">
+                <label className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 block mb-3">Strategic Sector (Zone)</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Sector Alpha"
+                  value={sector}
+                  onChange={e => setSector(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleSubmit()}
+                  aria-label="Sector ID"
+                  className="w-full text-white rounded-2xl p-4 border outline-none text-[15px] font-medium transition-all duration-300"
+                  style={{
+                    background: 'rgba(255,255,255,0.03)',
+                    borderColor: sector ? `${selectedType.color}40` : 'rgba(255,255,255,0.08)',
+                    boxShadow: sector ? `0 4px 20px ${selectedType.color}10` : 'none',
                   }}
                 />
               </div>
